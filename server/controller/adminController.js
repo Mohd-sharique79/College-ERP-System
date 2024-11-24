@@ -293,7 +293,8 @@ export const addFaculty = async (req, res) => {
     const newFaculty = await new Faculty({
       name,
       email,
-      password: hashedPassword,
+      // password: hashedPassword,
+      password: 123,
       joiningYear,
       username,
       department,
@@ -555,7 +556,9 @@ export const addStudent = async (req, res) => {
     const newStudent = await new Student({
       name,
       dob,
-      password: hashedPassword,
+      // password: hashedPassword,
+      password: 123,
+
       username,
       department,
       contactNumber,

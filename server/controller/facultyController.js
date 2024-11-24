@@ -16,10 +16,20 @@ export const facultyLogin = async (req, res) => {
       errors.usernameError = "Faculty doesn't exist.";
       return res.status(404).json(errors);
     }
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      existingFaculty.password
-    );
+    // const isPasswordCorrect = await bcrypt.compare(
+    //   password,
+    //   existingFaculty.password
+    // );
+
+    if (!existingFaculty.passwordUpdated) {
+      var isPasswordCorrect = password == existingFaculty.password;
+    } else {
+      var isPasswordCorrect = await bcrypt.compare(
+        password,
+        existingFaculty.password
+      );
+    }
+
     if (!isPasswordCorrect) {
       errors.passwordError = "Invalid Credentials";
       return res.status(404).json(errors);

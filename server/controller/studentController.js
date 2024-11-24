@@ -16,15 +16,19 @@ export const studentLogin = async (req, res) => {
       errors.usernameError = "Student doesn't exist.";
       return res.status(404).json(errors);
     }
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      existingStudent.password
-    );
-    if (!isPasswordCorrect) {
-      errors.passwordError = "Invalid Credentials";
-      return res.status(404).json(errors);
-    }
+    // const isPasswordCorrect = await bcrypt.compare(
+    //   password,
+    //   existingStudent.password
+    // );
 
+    if (!existingStudent.passwordUpdated) {
+      var isPasswordCorrect = password == existingStudent.password;
+    } else {
+      var isPasswordCorrect = await bcrypt.compare(
+        password,
+        existingStudent.password
+      );
+    }
     const token = jwt.sign(
       {
         email: existingStudent.email,
